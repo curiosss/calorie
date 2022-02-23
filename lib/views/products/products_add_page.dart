@@ -69,7 +69,8 @@ class _ProductsAddPageState extends State<ProductsAddPage> {
       });
       imgExtension = imageT.path.split(".").last;
       isImageSelected = true;
-      print(imageT.path);
+      print(imageT.path); 
+      
     } catch (e) {
       print(e);
     }
