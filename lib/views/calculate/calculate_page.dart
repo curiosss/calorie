@@ -76,6 +76,7 @@ class _CalculatePageState extends State<CalculatePage> {
                   child: Text('Ýeňil işjeňlik'),
                 ),
                 DropdownMenuItem(
+                  //
                   value: 0,
                   child: Text('Ortaça işjeňlik'),
                 ),
