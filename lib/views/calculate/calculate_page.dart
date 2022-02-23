@@ -9,6 +9,21 @@ class CalculatePage extends StatefulWidget {
 }
 
 class _CalculatePageState extends State<CalculatePage> {
+  TextEditingController _ageValController = TextEditingController();
+  TextEditingController _weightValController = TextEditingController();
+  TextEditingController _heightValController = TextEditingController();
+  int _genderTypeInd = 0;
+  int activityTypeInd = 0;
+
+  @override
+  void dispose() {
+    _ageValController.dispose();
+    _weightValController.dispose();
+    _heightValController.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,18 +32,65 @@ class _CalculatePageState extends State<CalculatePage> {
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
-        padding: EdgeInsets.all(Dimens.GMargin),
+        padding:
+            EdgeInsets.symmetric(vertical: Dimens.GMargin, horizontal: 30.0),
         child: Column(
           children: [
-            buildRow(title: 'Ýaşy'),
+            buildRow(title: 'Ýaşy', textEditingController: _ageValController),
             SizedBox(height: Dimens.GMargin),
-            buildRow(title: 'Jynsy'),
+            _buildDropdown(
+              title: 'Jynsy',
+              items: [
+                DropdownMenuItem(
+                  value: 0,
+                  child: Text('Erkek'),
+                ),
+                DropdownMenuItem(
+                  value: 1,
+                  child: Text('Ayal'),
+                )
+              ],
+              onChanged: (val) {
+                setState(() {
+                  _genderTypeInd = val;
+                });
+              },
+              typeIndex: _genderTypeInd,
+            ),
             SizedBox(height: Dimens.GMargin),
-            buildRow(title: 'Boýy'),
+            buildRow(
+                title: 'Boýy', textEditingController: _heightValController),
             SizedBox(height: Dimens.GMargin),
-            buildRow(title: 'Agramy'),
+            buildRow(
+                title: 'Agramy', textEditingController: _weightValController),
             SizedBox(height: Dimens.GMargin),
-            buildRow(title: 'Işjenligi'),
+            _buildDropdown(
+              title: 'Isjenligi',
+              items: [
+                DropdownMenuItem(
+                  value: 0,
+                  child: Text('Oturylyşyk'),
+                ),
+                DropdownMenuItem(
+                  value: 0,
+                  child: Text('Ýeňil işjeňlik'),
+                ),
+                DropdownMenuItem(
+                  value: 0,
+                  child: Text('Ortaça işjeňlik'),
+                ),
+                DropdownMenuItem(
+                  value: 1,
+                  child: Text('Örän işjeň'),
+                )
+              ],
+              onChanged: (val) {
+                setState(() {
+                  _genderTypeInd = val;
+                });
+              },
+              typeIndex: activityTypeInd,
+            ),
             SizedBox(height: 2 * Dimens.GMargin),
             SizedBox(
               height: 45.0,
@@ -37,6 +99,13 @@ class _CalculatePageState extends State<CalculatePage> {
                 onPressed: () {},
                 icon: Icon(Icons.calculate),
                 label: Text('Hasapla'),
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(Dimens.GBORDER_R),
+                    ),
+                  ),
+                ),
               ),
             ),
           ],
@@ -45,14 +114,42 @@ class _CalculatePageState extends State<CalculatePage> {
     );
   }
 
-  Widget buildRow({String title}) {
+  Widget buildRow({String title, TextEditingController textEditingController}) {
+    return Row(
+      children: [
+        Expanded(
+          child: Text(title),
+        ),
+        Flexible(
+          child: Container(
+            constraints: BoxConstraints(minWidth: 50),
+            child: TextField(
+              controller: textEditingController,
+              keyboardType: TextInputType.number,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDropdown(
+      {String title,
+      List<DropdownMenuItem> items,
+      int typeIndex,
+      Function onChanged}) {
     return Row(
       children: [
         Expanded(
           child: Text(title),
         ),
         Expanded(
-          child: TextField(),
+          child: DropdownButton(
+            underline: Container(),
+            value: typeIndex,
+            onChanged: onChanged,
+            items: items,
+          ),
         ),
       ],
     );
