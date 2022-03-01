@@ -1,4 +1,6 @@
 import 'package:calorie_calculator/helpers/db_helper.dart';
+import 'package:calorie_calculator/helpers/shared_preferences_helper.dart';
+import 'package:calorie_calculator/models/calorie_model.dart';
 import 'package:calorie_calculator/models/category_model.dart';
 import 'package:calorie_calculator/models/product_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 class CategorieProvider with ChangeNotifier {
   List<Category> categories = [];
   List<Product> products = [];
+  CalorieModel calorieModel;
 
   Future<bool> initCats() async {
     try {
@@ -27,6 +30,19 @@ class CategorieProvider with ChangeNotifier {
     } catch (e) {
       print(e);
       return false;
+    } finally {
+      notifyListeners();
+    }
+  }
+
+  Future<CalorieModel> initCalData() async {
+    try {
+      calorieModel = await SharedPreferencesHelper.getCalData();
+      print(calorieModel);
+      return calorieModel;
+    } catch (e) {
+      print(e);
+      return null;
     } finally {
       notifyListeners();
     }
@@ -86,5 +102,16 @@ class CategorieProvider with ChangeNotifier {
       notifyListeners();
     }
     return res;
+  }
+
+  //profile details
+  Future<bool> saveCalData(CalorieModel calorieModel) async {
+    try {
+      await SharedPreferencesHelper.setCalData(calorieModel: calorieModel);
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
   }
 }
