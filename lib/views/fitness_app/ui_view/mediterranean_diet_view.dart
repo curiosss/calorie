@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
@@ -9,9 +8,11 @@ class MediterranesnDietView extends StatelessWidget {
   final AnimationController animationController;
   final Animation<double> animation;
 
-  const MediterranesnDietView(
-      {Key key, this.animationController, this.animation})
-      : super(key: key);
+  const MediterranesnDietView({
+    Key key,
+    this.animationController,
+    this.animation,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -358,7 +359,7 @@ class MediterranesnDietView extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  'Otlar',
+                                  'Beloklar',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontFamily: FitnessAppTheme.fontName,

@@ -1,5 +1,3 @@
-
-
 import 'package:calorie_calculator/views/fitness_app/models/meals_list_data.dart';
 import 'package:flutter/material.dart';
 
@@ -52,7 +50,7 @@ class _MealsListViewState extends State<MealsListView>
             transform: Matrix4.translationValues(
                 0.0, 30 * (1.0 - widget.mainScreenAnimation.value), 0.0),
             child: Container(
-              height: 216,
+              height: 245,
               width: double.infinity,
               child: ListView.builder(
                 physics: BouncingScrollPhysics(),
@@ -158,12 +156,13 @@ class MealsView extends StatelessWidget {
                               child: Padding(
                                 padding:
                                     const EdgeInsets.only(top: 8, bottom: 8),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      mealsListData.meals.join('\n'),
+                                child: SingleChildScrollView(
+                                  physics: BouncingScrollPhysics(),
+                                  child: Wrap(
+                                      children: mealsListData.meals.map((e) {
+                                    return Text(
+                                      '$e, ',
+                                      overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                         fontFamily: FitnessAppTheme.fontName,
                                         fontWeight: FontWeight.w500,
@@ -171,65 +170,42 @@ class MealsView extends StatelessWidget {
                                         letterSpacing: 0.2,
                                         color: FitnessAppTheme.white,
                                       ),
-                                    ),
-                                  ],
+                                    );
+                                  }).toList()),
                                 ),
                               ),
                             ),
-                            mealsListData.kacl==0
-                                ? Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: <Widget>[
-                                      Text(
-                                        mealsListData.kacl.toString(),
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontFamily: FitnessAppTheme.fontName,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 24,
-                                          letterSpacing: 0.2,
-                                          color: FitnessAppTheme.white,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 4, bottom: 3),
-                                        child: Text(
-                                          'kcal',
-                                          style: TextStyle(
-                                            fontFamily:
-                                                FitnessAppTheme.fontName,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 10,
-                                            letterSpacing: 0.2,
-                                            color: FitnessAppTheme.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                : Container(
-                                    decoration: BoxDecoration(
-                                      color: FitnessAppTheme.nearlyWhite,
-                                      shape: BoxShape.circle,
-                                      boxShadow: <BoxShadow>[
-                                        BoxShadow(
-                                            color: FitnessAppTheme.nearlyBlack
-                                                .withOpacity(0.4),
-                                            offset: Offset(8.0, 8.0),
-                                            blurRadius: 8.0),
-                                      ],
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(6.0),
-                                      child: Icon(
-                                        Icons.add,
-                                        color: HexColor(mealsListData.endColor),
-                                        size: 24,
-                                      ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: <Widget>[
+                                Text(
+                                  mealsListData.kcal.toString(),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontFamily: FitnessAppTheme.fontName,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 24,
+                                    letterSpacing: 0.2,
+                                    color: FitnessAppTheme.white,
+                                  ),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 4, bottom: 3),
+                                  child: Text(
+                                    'kcal',
+                                    style: TextStyle(
+                                      fontFamily: FitnessAppTheme.fontName,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 10,
+                                      letterSpacing: 0.2,
+                                      color: FitnessAppTheme.white,
                                     ),
                                   ),
+                                ),
+                              ],
+                            )
                           ],
                         ),
                       ),
