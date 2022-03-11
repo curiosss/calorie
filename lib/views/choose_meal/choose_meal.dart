@@ -2,12 +2,18 @@ import 'dart:io';
 
 import 'package:calorie_calculator/models/product_model.dart';
 import 'package:calorie_calculator/providers/todaymeals_prv.dart';
+import 'package:calorie_calculator/utils/colors.dart';
 import 'package:calorie_calculator/utils/dimens.dart';
+import 'package:calorie_calculator/views/fitness_app/models/meals_list_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ChooseMealPage extends StatefulWidget {
-  const ChooseMealPage({Key key}) : super(key: key);
+  final MealsListData mealsListData;
+  const ChooseMealPage({
+    Key key,
+    @required this.mealsListData,
+  }) : super(key: key);
 
   @override
   State<ChooseMealPage> createState() => _ChooseMealPageState();
@@ -71,26 +77,45 @@ class _ChooseMealPageState extends State<ChooseMealPage> {
                 children: [
                   _buildProductItem(product),
                   SizedBox(height: Dimens.GMargin),
-                  Card(
-                    child: Row(
-                      children: [
-                        Text(
-                          'mukdary',
-                          style: TextStyle(color: Colors.grey),
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: TextField(
+                      controller: textEditingController,
+                      keyboardType: TextInputType.number,
+                      style: TextStyle(fontSize: 18.0),
+                      decoration: InputDecoration(
+                        labelText: 'Mukdary',
+                        hintText: '100 g',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(color: Colors.red),
                         ),
-                        SizedBox(width: Dimens.GMargin),
-                        Expanded(
-                          child: TextField(
-                            controller: textEditingController,
-                          ),
-                        ),
-                      ],
+                        prefixIcon: Icon(Icons.numbers),
+                      ),
                     ),
                   ),
                   SizedBox(height: Dimens.GMargin),
-                  ElevatedButton(
-                    onPressed: saveProduct,
-                    child: Text('Ýatda sakla'),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _buildPlateItem(val: '50'),
+                      _buildPlateItem(val: '100'),
+                      _buildPlateItem(val: '150'),
+                      _buildPlateItem(val: '200'),
+                    ],
+                  ),
+                  SizedBox(height: Dimens.GMargin),
+                  SizedBox(
+                    height: 40.0,
+                    child: ElevatedButton(
+                      onPressed: saveProduct,
+                      child: Text('Ýatda sakla'),
+                      style: ButtonStyle(
+                          shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      Dimens.SBORDER_R)))),
+                    ),
                   ),
                 ],
               ),
@@ -103,7 +128,6 @@ class _ChooseMealPageState extends State<ChooseMealPage> {
 
   saveProduct() {
     if (validateEnterProduct()) {
-      
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -127,17 +151,45 @@ class _ChooseMealPageState extends State<ChooseMealPage> {
         onTap: () {
           onSelectMeal(product);
         },
-        leading: ClipRRect(
-          borderRadius: BorderRadius.circular(Dimens.GBORDER_R),
-          child: Image.file(
-            File(product.image),
-            fit: BoxFit.cover,
+        leading: Container(
+          height: 75,
+          width: 75,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(Dimens.SBORDER_R),
+            child: Image.file(
+              File(product.image),
+              fit: BoxFit.fill,
+            ),
           ),
         ),
-        minLeadingWidth: 80,
         title: Text(product.name),
         subtitle: Text(
-          product.calorie.toString(),
+          product.calorie.toString() + ' kkal / 100 g',
+        ),
+      ),
+    );
+  }
+
+  _buildPlateItem({String val = '0'}) {
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(Dimens.SBORDER_R),
+        onTap: () {
+          textEditingController.text = val;
+        },
+        child: Container(
+          height: 40,
+          alignment: Alignment.center,
+          padding: EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: AppColors.blue,
+            borderRadius: BorderRadius.circular(Dimens.SBORDER_R),
+          ),
+          child: Text(
+            val + ' g',
+            style: TextStyle(color: Colors.white),
+          ),
         ),
       ),
     );
@@ -149,7 +201,7 @@ class _ChooseMealPageState extends State<ChooseMealPage> {
     return Consumer<TodayMealsProvider>(builder: (context, todayMealProv, _) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Nahar saýlamak'),
+          title: Text(widget.mealsListData.titleTxt ?? ''),
         ),
         body:
             Consumer<TodayMealsProvider>(builder: (context, todayMealProv, _) {

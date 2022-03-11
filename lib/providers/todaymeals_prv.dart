@@ -11,7 +11,7 @@ class TodayMealsProvider with ChangeNotifier {
   double totalYaglar = 0;
   double totalUglewodlar = 0;
   double water = 0;
-  List<MealsListData> eatings = [];
+  List<MealsListData> eatings = MealsListData.standardMeals;
   List<Product> products = [];
 
   Future<List<Product>> initSelectableProducts() async {

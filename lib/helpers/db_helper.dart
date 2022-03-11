@@ -39,11 +39,13 @@ class DB {
   _onCreate(Database db, int version) async {
     await _createTableCategories(db);
     await _createTableProducts(db);
+    await _createTableMenus(db);
   }
 
   _onUpgradeAndDowngrade(Database db, int oldVersion, int newVersion) async {
     await _createTableCategories(db);
     await _createTableProducts(db);
+    await _createTableMenus(db);
   }
 
   /// Create products table
@@ -71,6 +73,18 @@ class DB {
         fat INTEGER,
         carbohydrate INTEGER,
         image TEXT
+      );
+    ''');
+  }
+
+  Future<void> _createTableMenus(Database db) async {
+    await db.execute('DROP TABLE IF EXISTS menus;');
+    await db.execute('''
+      CREATE TABLE menus (
+        id INTEGER PRIMARY KEY,
+        date TEXT,
+        meals TEXT,
+        water REAL,
       );
     ''');
   }
