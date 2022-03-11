@@ -238,4 +238,20 @@ class DB {
       ),
     );
   }
+
+  Future<List<Product>> getAllProducts() async {
+    print('getting all products from db');
+    final db = await database;
+    var _products = await db.rawQuery(
+      'SELECT * FROM products',
+    );
+    print(_products);
+    return List.from(
+      _products.map(
+        (e) {
+          return Product.fromMap(e);
+        },
+      ),
+    );
+  }
 }

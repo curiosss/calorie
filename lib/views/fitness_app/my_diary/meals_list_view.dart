@@ -1,3 +1,4 @@
+import 'package:calorie_calculator/views/choose_meal/choose_meal.dart';
 import 'package:calorie_calculator/views/fitness_app/models/meals_list_data.dart';
 import 'package:flutter/material.dart';
 
@@ -69,10 +70,20 @@ class _MealsListViewState extends State<MealsListView>
                                   curve: Curves.fastOutSlowIn)));
                   animationController?.forward();
 
-                  return MealsView(
-                    mealsListData: mealsListData[index],
-                    animation: animation,
-                    animationController: animationController,
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChooseMealPage(),
+                        ),
+                      );
+                    },
+                    child: MealsView(
+                      mealsListData: mealsListData[index],
+                      animation: animation,
+                      animationController: animationController,
+                    ),
                   );
                 },
               ),
