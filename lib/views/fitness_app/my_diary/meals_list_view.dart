@@ -20,7 +20,7 @@ class MealsListView extends StatefulWidget {
 class _MealsListViewState extends State<MealsListView>
     with TickerProviderStateMixin {
   AnimationController animationController;
-  List<MealsListData> mealsListData = MealsListData.tabIconsList;
+  List<MealsListData> mealsListData = MealsListData.standardMeals;
 
   @override
   void initState() {
@@ -75,7 +75,9 @@ class _MealsListViewState extends State<MealsListView>
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ChooseMealPage(),
+                          builder: (context) => ChooseMealPage(
+                            mealsListData: mealsListData[index],
+                          ),
                         ),
                       );
                     },
