@@ -84,7 +84,7 @@ class DB {
         id INTEGER PRIMARY KEY,
         date TEXT,
         meals TEXT,
-        water REAL,
+        water REAL
       );
     ''');
   }

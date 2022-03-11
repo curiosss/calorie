@@ -6,6 +6,7 @@ class Product {
   int protein;
   int fat;
   int carbohydrate;
+  int quant;
   String image;
   Product({
     this.id = -1,
@@ -15,6 +16,7 @@ class Product {
     this.protein = 0,
     this.fat = 0,
     this.carbohydrate = 0,
+    this.quant = 0,
     this.image = '',
   });
 
@@ -27,9 +29,24 @@ class Product {
       calorie: json['calorie'] ?? 0,
       protein: json['protein'] ?? 0,
       fat: json['fat'] ?? 0,
+      quant: json['quant'] ?? 0,
       carbohydrate: json['carbohydrate'] ?? 0,
       image: json['image'] ?? '',
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'cat_id': categoryId,
+      'name': name,
+      'calorie': calorie,
+      'protein': protein,
+      'fat': fat,
+      'quant': quant,
+      'carbohydrate': carbohydrate,
+      'image': image,
+    };
   }
 
   // Product.copyWith(this.id, {String title, String image}) {

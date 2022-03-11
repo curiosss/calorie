@@ -108,7 +108,9 @@ class _ChooseMealPageState extends State<ChooseMealPage> {
                   SizedBox(
                     height: 40.0,
                     child: ElevatedButton(
-                      onPressed: saveProduct,
+                      onPressed: () {
+                        saveProduct(product);
+                      },
                       child: Text('Ýatda sakla'),
                       style: ButtonStyle(
                           shape: MaterialStateProperty.all(
@@ -126,8 +128,13 @@ class _ChooseMealPageState extends State<ChooseMealPage> {
     );
   }
 
-  saveProduct() {
+  saveProduct(Product product) {
     if (validateEnterProduct()) {
+      product.quant =
+          int.tryParse(textEditingController.text.toString() ?? '0');
+      Provider.of<TodayMealsProvider>(context, listen: false).addMealListData(
+          mealType: widget.mealsListData.typeId, product: product);
+      Navigator.pop(context);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -135,6 +142,13 @@ class _ChooseMealPageState extends State<ChooseMealPage> {
         ),
       );
     }
+  }
+
+  removeProduct(int index) {
+    Provider.of<TodayMealsProvider>(context, listen: false).removeMealListData(
+      mealType: widget.mealsListData.typeId,
+      index: index,
+    );
   }
 
   validateEnterProduct() {
@@ -205,7 +219,46 @@ class _ChooseMealPageState extends State<ChooseMealPage> {
         ),
         body:
             Consumer<TodayMealsProvider>(builder: (context, todayMealProv, _) {
-          return Container();
+          return ListView.builder(
+            physics: BouncingScrollPhysics(),
+            padding: EdgeInsets.symmetric(
+              horizontal: Dimens.GMargin,
+              vertical: Dimens.HGMargin,
+            ),
+            itemCount:
+                todayMealProv.eatings[widget.mealsListData.typeId].length,
+            itemBuilder: ((context, index) {
+              Product product =
+                  todayMealProv.eatings[widget.mealsListData.typeId][index];
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: Dimens.HGMargin),
+                child: Card(
+                  child: ListTile(
+                    leading: Container(
+                      height: 100,
+                      width: 100,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(Dimens.SBORDER_R),
+                        child: Image.file(
+                          File(product.image),
+                        ),
+                      ),
+                    ),
+                    title: Text(product.name),
+                    subtitle: Text(
+                        (product.quant / 100 * product.calorie).toString() +
+                            ' kkal / ${product.quant} g'),
+                    trailing: IconButton(
+                      onPressed: () {
+                        removeProduct(index);
+                      },
+                      icon: Icon(Icons.delete),
+                    ),
+                  ),
+                ),
+              );
+            }),
+          );
         }),
         floatingActionButton: FloatingActionButton(
           onPressed: addMeal,
