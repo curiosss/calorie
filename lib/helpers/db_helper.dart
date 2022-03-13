@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io' show Directory;
 
 import 'package:calorie_calculator/models/category_model.dart';
+import 'package:calorie_calculator/models/menus_model.dart';
 import 'package:calorie_calculator/models/product_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart';
@@ -267,5 +268,49 @@ class DB {
         },
       ),
     );
+  }
+
+  //meals
+  Future<bool> createOrUpdateTodayMenu(MenusModel menus) async {
+    final db = await database;
+    var batch = db.batch();
+    var _menus = await db.rawQuery(
+      'SELECT * FROM menus WHERE id=?',
+      [menus.id],
+    );
+    if (_menus.isNotEmpty) {
+      //update todays menu
+      try {
+        final db = await database;
+        await db.rawUpdate(
+          'UPDATE menus SET date=?, meals=?, water=? WHERE id=?',
+          [
+            menus.date,
+            menus.meals,
+            menus.water,
+            menus.id,
+          ],
+        );
+        print('meal updated successfully');
+        return true;
+      } catch (e) {
+        print(e);
+        return false;
+      }
+    } else {
+      //create today menu
+      try {
+        batch.execute(
+          'INSERT OR REPLACE INTO menus VALUES (?, ?, ?, ?)',
+          [menus.id, menus.date, menus.meals, menus.water],
+        );
+        await batch.commit(noResult: true, continueOnError: false);
+        print('meal successfully inserted to database');
+        return true;
+      } catch (e) {
+        print(e);
+        return false;
+      }
+    }
   }
 }

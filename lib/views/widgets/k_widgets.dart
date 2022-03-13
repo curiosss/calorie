@@ -3,8 +3,7 @@ import 'package:calorie_calculator/utils/dimens.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
-
+import '../bottom_sheets/confirm_sheet.dart';
 
 // Widget kCachedImageWithShadow({
 //   @required String imageurl,
@@ -108,4 +107,21 @@ Widget kImageWithTitle({
       ],
     ),
   );
+}
+
+confirm(context, handler) {
+  showModalBottomSheet(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(15.0),
+        ),
+      ),
+      context: context,
+      builder: (context) => ConfirmBottomSheet(
+            text: 'Dogrydan hem pozmakçymy ?',
+          )).then((value) {
+    if (value != null && value) {
+      handler();
+    }
+  });
 }

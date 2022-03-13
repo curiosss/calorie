@@ -5,6 +5,7 @@ import 'package:calorie_calculator/providers/todaymeals_prv.dart';
 import 'package:calorie_calculator/utils/colors.dart';
 import 'package:calorie_calculator/utils/dimens.dart';
 import 'package:calorie_calculator/views/fitness_app/models/meals_list_data.dart';
+import 'package:calorie_calculator/views/widgets/k_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -145,10 +146,13 @@ class _ChooseMealPageState extends State<ChooseMealPage> {
   }
 
   removeProduct(int index) {
-    Provider.of<TodayMealsProvider>(context, listen: false).removeMealListData(
-      mealType: widget.mealsListData.typeId,
-      index: index,
-    );
+    confirm(context, () {
+      Provider.of<TodayMealsProvider>(context, listen: false)
+          .removeMealListData(
+        mealType: widget.mealsListData.typeId,
+        index: index,
+      );
+    });
   }
 
   validateEnterProduct() {
