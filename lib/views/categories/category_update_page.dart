@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:calorie_calculator/helpers/db_helper.dart';
 import 'package:calorie_calculator/models/category_model.dart';
 import 'package:calorie_calculator/providers/categorie_prv.dart';
 import 'package:calorie_calculator/utils/dimens.dart';

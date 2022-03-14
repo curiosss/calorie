@@ -22,6 +22,7 @@ class MediterranesnDietView extends StatelessWidget {
       return AnimatedBuilder(
         animation: animationController,
         builder: (BuildContext context, Widget child) {
+          int val = (prov.eatenCal / prov.shouldEatCal * 360).toInt();
           return FadeTransition(
             opacity: animation,
             child: Transform(
@@ -112,7 +113,7 @@ class MediterranesnDietView extends StatelessWidget {
                                                         const EdgeInsets.only(
                                                             left: 4, bottom: 3),
                                                     child: Text(
-                                                      '${(1127 * animation.value).toInt()}',
+                                                      '${(prov.eatenCal * animation.value).toInt()}',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style: TextStyle(
@@ -132,7 +133,7 @@ class MediterranesnDietView extends StatelessWidget {
                                                         const EdgeInsets.only(
                                                             left: 4, bottom: 3),
                                                     child: Text(
-                                                      'Kcal',
+                                                      'Kkal',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style: TextStyle(
@@ -213,7 +214,7 @@ class MediterranesnDietView extends StatelessWidget {
                                                         const EdgeInsets.only(
                                                             left: 4, bottom: 3),
                                                     child: Text(
-                                                      '${(102 * animation.value).toInt()}',
+                                                      '${(prov.leftCal * animation.value).toInt()}',
                                                       textAlign:
                                                           TextAlign.center,
                                                       style: TextStyle(
@@ -290,7 +291,7 @@ class MediterranesnDietView extends StatelessWidget {
                                               CrossAxisAlignment.center,
                                           children: <Widget>[
                                             Text(
-                                              '${(1503 * animation.value).toInt()}',
+                                              '${(prov.eatenCal * animation.value).toInt()}',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 fontFamily:
@@ -303,7 +304,7 @@ class MediterranesnDietView extends StatelessWidget {
                                               ),
                                             ),
                                             Text(
-                                              'Kcal galdy',
+                                              'Kkal',
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 fontFamily:
@@ -328,8 +329,8 @@ class MediterranesnDietView extends StatelessWidget {
                                               HexColor("#8A98E8"),
                                               HexColor("#8A98E8")
                                             ],
-                                            angle: 140 +
-                                                (360 - 140) *
+                                            angle: val +
+                                                (360 - val) *
                                                     (1.0 - animation.value)),
                                         child: SizedBox(
                                           width: 108,
@@ -391,8 +392,8 @@ class MediterranesnDietView extends StatelessWidget {
                                       child: Row(
                                         children: <Widget>[
                                           Container(
-                                            width:
-                                                ((70 / 1.2) * animation.value),
+                                            width: ((prov.ratioBelok / 1.2) *
+                                                animation.value),
                                             height: 4,
                                             decoration: BoxDecoration(
                                               gradient: LinearGradient(colors: [
@@ -411,7 +412,7 @@ class MediterranesnDietView extends StatelessWidget {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 6),
                                     child: Text(
-                                      '12g galdy',
+                                      '${prov.totalBelok}g',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontFamily: FitnessAppTheme.fontName,
@@ -436,7 +437,7 @@ class MediterranesnDietView extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text(
-                                        'Proteinler',
+                                        'Uglewodlar',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontFamily: FitnessAppTheme.fontName,
@@ -460,7 +461,8 @@ class MediterranesnDietView extends StatelessWidget {
                                           child: Row(
                                             children: <Widget>[
                                               Container(
-                                                width: ((70 / 2) *
+                                                width: ((prov.ratioUglewod /
+                                                        2) *
                                                     animationController.value),
                                                 height: 4,
                                                 decoration: BoxDecoration(
@@ -482,7 +484,7 @@ class MediterranesnDietView extends StatelessWidget {
                                       Padding(
                                         padding: const EdgeInsets.only(top: 6),
                                         child: Text(
-                                          '30g galdy',
+                                          '${prov.totalUglewodlar}g',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontFamily:
@@ -534,7 +536,7 @@ class MediterranesnDietView extends StatelessWidget {
                                           child: Row(
                                             children: <Widget>[
                                               Container(
-                                                width: ((70 / 2.5) *
+                                                width: ((prov.ratioYag / 2.5) *
                                                     animationController.value),
                                                 height: 4,
                                                 decoration: BoxDecoration(
@@ -556,7 +558,7 @@ class MediterranesnDietView extends StatelessWidget {
                                       Padding(
                                         padding: const EdgeInsets.only(top: 6),
                                         child: Text(
-                                          '10g galdy',
+                                          '${prov.totalYaglar}g',
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             fontFamily:

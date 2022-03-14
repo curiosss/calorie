@@ -89,7 +89,9 @@ class CategorieProvider with ChangeNotifier {
 
   Future<bool> updateProduct({@required Product product}) async {
     bool res = await DB.instance.updateProduct(product: product);
-    if (res) initCats();
+    if (res) {
+      initProducts(catid: product.categoryId);
+    }
 
     return res;
   }

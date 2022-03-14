@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:calorie_calculator/models/product_model.dart';
 import 'package:calorie_calculator/providers/categorie_prv.dart';
 import 'package:calorie_calculator/utils/dimens.dart';
@@ -31,7 +30,7 @@ class _ProductsUpdatePageState extends State<ProductsUpdatePage> {
   File image;
   String imgExtension;
   String path;
-  Uint8List imageBytes;
+  // Uint8List imageBytes;
 
   @override
   void initState() {

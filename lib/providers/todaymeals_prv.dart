@@ -8,12 +8,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 class TodayMealsProvider with ChangeNotifier {
-  double shouldEatCal = 0;
+  double shouldEatCal = 2000;
   double eatenCal = 0;
   double leftCal = 0;
-  double totalBelok = 0;
-  double totalYaglar = 0;
-  double totalUglewodlar = 0;
+  int totalBelok = 0, ratioBelok = 0;
+  int totalYaglar = 0, ratioYag = 0;
+  int totalUglewodlar = 0, ratioUglewod = 0;
+
   double water = 0;
   List<List<Product>> eatings = [[], [], [], []];
   List<double> totalEatingCal = [0, 0, 0, 0];
@@ -64,13 +65,28 @@ class TodayMealsProvider with ChangeNotifier {
   }
 
   calculateTotalCalories() {
+    eatenCal = 0;
+    totalBelok = 0;
+    totalYaglar = 0;
+    totalUglewodlar = 0;
     for (int i = 0; i < eatings.length; i++) {
       double sum = 0;
       eatings[i].forEach((product) {
         sum += (product.calorie * product.quant / 100) ?? 0;
+        totalBelok += product.protein ?? 0;
+        totalYaglar += product.fat ?? 0;
+        totalUglewodlar += product.carbohydrate ?? 0;
       });
       totalEatingCal[i] = sum;
+      eatenCal += sum;
     }
+    leftCal = shouldEatCal - eatenCal;
+    int ttsum = totalBelok + totalUglewodlar + totalYaglar;
+    ratioBelok = (totalBelok / ttsum * 100).toInt();
+    ratioYag = (totalYaglar / ttsum * 100).toInt();
+    ratioUglewod = (totalUglewodlar / ttsum * 100).toInt();
+
+    print('new : $ratioBelok');
   }
 
   Future<bool> addMealListData(

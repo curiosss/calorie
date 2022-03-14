@@ -176,7 +176,7 @@ class _ChooseMealPageState extends State<ChooseMealPage> {
             borderRadius: BorderRadius.circular(Dimens.SBORDER_R),
             child: Image.file(
               File(product.image),
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
             ),
           ),
         ),
@@ -239,12 +239,13 @@ class _ChooseMealPageState extends State<ChooseMealPage> {
                 child: Card(
                   child: ListTile(
                     leading: Container(
-                      height: 100,
-                      width: 100,
+                      height: 80,
+                      width: 80,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(Dimens.SBORDER_R),
                         child: Image.file(
                           File(product.image),
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
