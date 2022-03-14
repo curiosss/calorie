@@ -163,7 +163,10 @@ class _BottomBarViewState extends State<BottomBarView>
                           splashColor: Colors.white.withOpacity(0.1),
                           highlightColor: Colors.transparent,
                           focusColor: Colors.transparent,
-                          onTap: widget.addClick,
+                          onTap: () {
+                            setRemoveAllSelection(null, isAddclick: true);
+                            widget.addClick();
+                          },
                           child: Icon(
                             Icons.add,
                             color: FitnessAppTheme.white,
@@ -182,16 +185,23 @@ class _BottomBarViewState extends State<BottomBarView>
     );
   }
 
-  void setRemoveAllSelection(TabIconData tabIconData) {
-    if (!mounted) return;
-    setState(() {
-      widget.tabIconsList?.forEach((TabIconData tab) {
-        tab.isSelected = false;
-        if (tabIconData.index == tab.index) {
-          tab.isSelected = true;
-        }
+  void setRemoveAllSelection(TabIconData tabIconData,
+      {bool isAddclick = false}) {
+    if (isAddclick) {
+      widget.tabIconsList.forEach((element) {
+        element.isSelected = false;
       });
-    });
+    } else {
+      if (!mounted) return;
+      setState(() {
+        widget.tabIconsList?.forEach((TabIconData tab) {
+          tab.isSelected = false;
+          if (tabIconData.index == tab.index) {
+            tab.isSelected = true;
+          }
+        });
+      });
+    }
   }
 }
 

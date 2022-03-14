@@ -23,7 +23,7 @@ class ConfirmBottomSheet extends StatelessWidget {
                 Icon(
                   Icons.info,
                   size: 60.0,
-                  color: Colors.green,
+                  color: Theme.of(context).primaryColor,
                 ),
                 SizedBox(height: 20.0),
                 Padding(
@@ -53,7 +53,7 @@ class ConfirmBottomSheet extends StatelessWidget {
                     child: Text(
                       'Ýok',
                       style: TextStyle(
-                        color: Colors.green,
+                        color: Theme.of(context).primaryColor,
                       ),
                     ),
                     onPressed: () {
@@ -62,7 +62,7 @@ class ConfirmBottomSheet extends StatelessWidget {
                     style: OutlinedButton.styleFrom(
                       side: BorderSide(
                         width: 2.0,
-                        color: Colors.green,
+                        color: Theme.of(context).primaryColor,
                         style: BorderStyle.solid,
                       ),
                     ),
@@ -80,7 +80,7 @@ class ConfirmBottomSheet extends StatelessWidget {
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
                         // CustomColors.green,
-                        Colors.green,
+                        Theme.of(context).primaryColor,
                       ),
                     ),
                     onPressed: () {

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io' show Directory;
 
 import 'package:calorie_calculator/models/category_model.dart';
@@ -271,7 +272,7 @@ class DB {
   }
 
   //meals
-  Future<bool> createOrUpdateTodayMenu(MenusModel menus) async {
+  Future<bool> updateTodayMenu(MenusModel menus) async {
     final db = await database;
     var batch = db.batch();
     var _menus = await db.rawQuery(
@@ -298,19 +299,40 @@ class DB {
         return false;
       }
     } else {
-      //create today menu
-      try {
-        batch.execute(
-          'INSERT OR REPLACE INTO menus VALUES (?, ?, ?, ?)',
-          [menus.id, menus.date, menus.meals, menus.water],
-        );
-        await batch.commit(noResult: true, continueOnError: false);
-        print('meal successfully inserted to database');
-        return true;
-      } catch (e) {
-        print(e);
-        return false;
-      }
+      createTodayMenu(menus);
+    }
+  }
+
+  Future<bool> createTodayMenu(MenusModel menus) async {
+    final db = await database;
+    var batch = db.batch();
+    try {
+      batch.execute(
+        'INSERT OR REPLACE INTO menus VALUES (?, ?, ?, ?)',
+        [menus.id, menus.date, menus.meals, menus.water],
+      );
+      await batch.commit(noResult: true, continueOnError: false);
+      print('meal successfully inserted to database');
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  Future<MenusModel> getTodayMenu({@required String date}) async {
+    print('getting product $date');
+    try {
+      final db = await database;
+      var _menus = await db.rawQuery(
+        'SELECT * FROM menus WHERE date=?',
+        [date],
+      );
+      print(_menus);
+      return MenusModel.fromJson(_menus.first);
+    } catch (e) {
+      print(e);
+      return null;
     }
   }
 }

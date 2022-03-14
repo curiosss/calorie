@@ -1,6 +1,8 @@
+import 'package:calorie_calculator/providers/todaymeals_prv.dart';
 import 'package:calorie_calculator/views/fitness_app/ui_view/glass_view.dart';
 import 'package:calorie_calculator/views/fitness_app/ui_view/mediterranean_diet_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../fitness_app_theme.dart';
 import 'meals_list_view.dart';
 import 'water_view.dart';
@@ -23,6 +25,7 @@ class _MyDiaryScreenState extends State<MyDiaryScreen>
 
   @override
   void initState() {
+    Provider.of<TodayMealsProvider>(context, listen: false).initTodayMeals();
     topBarAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
         CurvedAnimation(
             parent: widget.animationController,
