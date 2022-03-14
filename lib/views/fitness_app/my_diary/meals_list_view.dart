@@ -189,7 +189,7 @@ class MealsView extends StatelessWidget {
                                         style: TextStyle(
                                           fontFamily: FitnessAppTheme.fontName,
                                           fontWeight: FontWeight.w500,
-                                          fontSize: 10,
+                                          fontSize: 14,
                                           letterSpacing: 0.2,
                                           color: FitnessAppTheme.white,
                                         ),
@@ -224,7 +224,7 @@ class MealsView extends StatelessWidget {
                                       padding: const EdgeInsets.only(
                                           left: 10, bottom: 3),
                                       child: Text(
-                                        'kcal',
+                                        'kkal',
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                           fontFamily: FitnessAppTheme.fontName,

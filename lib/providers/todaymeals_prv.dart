@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:calorie_calculator/helpers/db_helper.dart';
+import 'package:calorie_calculator/helpers/shared_preferences_helper.dart';
+import 'package:calorie_calculator/models/calorie_model.dart';
 import 'package:calorie_calculator/models/menus_model.dart';
 import 'package:calorie_calculator/models/product_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -30,6 +32,11 @@ class TodayMealsProvider with ChangeNotifier {
 
   Future<bool> initTodayMeals() async {
     try {
+      CalorieModel calorieModel = await SharedPreferencesHelper.getCalData();
+      if (calorieModel != null && calorieModel.recomendCal != null) {
+        shouldEatCal = calorieModel.recomendCal;
+      }
+
       String today = DateFormat('yyyy.MM.dd').format(DateTime.now());
       menusModel = await DB.instance.getTodayMenu(date: today);
       if (menusModel == null) {

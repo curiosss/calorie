@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:calorie_calculator/models/category_model.dart';
 import 'package:calorie_calculator/models/product_model.dart';
 import 'package:calorie_calculator/providers/categorie_prv.dart';
 import 'package:calorie_calculator/utils/dimens.dart';
@@ -110,6 +109,7 @@ class _ProductsUpdatePageState extends State<ProductsUpdatePage> {
         fat: int.tryParse(_fatValController.text.toString() ?? '0'),
         carbohydrate: int.tryParse(_carboHydController.text.toString() ?? '0'),
         image: path,
+        categoryId: widget.product.categoryId,
       ),
     );
 
