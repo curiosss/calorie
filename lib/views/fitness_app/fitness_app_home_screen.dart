@@ -42,7 +42,7 @@ class _FitnessAppHomeScreenState extends State<FitnessAppHomeScreen>
   @override
   void didChangeDependencies() {
     screens = [
-      HistoryPage(),
+      HistoryPage(animationController: animationController),
       TipsPage(),
       CategoriesPage(),
       CalculatePage(),

@@ -1,7 +1,6 @@
 import 'package:calorie_calculator/utils/dimens.dart';
 import 'package:flutter/material.dart';
 
-
 class TipsPage extends StatefulWidget {
   const TipsPage({Key key}) : super(key: key);
 
@@ -10,6 +9,13 @@ class TipsPage extends StatefulWidget {
 }
 
 class _TipsPageState extends State<TipsPage> {
+  List<String> tips = [
+    'Gök önümleri we miweleri has köp iýiň.',
+    'Belok we witaminleriň ýeterlikdigine üns beriň.',
+    'Doldurylan ýagy we şekeri kesiň',
+    'Duzy az iýiň: ulular üçin günde 6g-dan köp bolmaly däl',
+    'Ertirlik hökman ediniň',
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +24,12 @@ class _TipsPageState extends State<TipsPage> {
       ),
       body: ListView.builder(
         physics: BouncingScrollPhysics(),
-        padding: EdgeInsets.all(Dimens.GMargin),
+        padding: EdgeInsets.only(
+          top: Dimens.GMargin,
+          left: Dimens.GMargin,
+          right: Dimens.GMargin,
+          bottom: 80,
+        ),
         itemCount: 5,
         itemBuilder: (context, index) {
           return Card(
@@ -51,7 +62,7 @@ class _TipsPageState extends State<TipsPage> {
                     horizontal: Dimens.GMargin,
                   ),
                   child: Text(
-                    '${index + 1}\) Dogry iymitlenmek saglygynyza peydalydyr!',
+                    '${index + 1}\) ${tips[index]}',
                     textAlign: TextAlign.start,
                   ),
                 ),

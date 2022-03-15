@@ -86,6 +86,7 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                     child: ElevatedButton(
                       onPressed: () {
                         saveDrink(isAdd: isAdd);
+                        Navigator.pop(context);
                       },
                       child: Text('Ýatda sakla'),
                       style: ButtonStyle(
@@ -271,7 +272,7 @@ class _WaterViewState extends State<WaterView> with TickerProviderStateMixin {
                                               padding: const EdgeInsets.only(
                                                   left: 4.0),
                                               child: Text(
-                                                'Soňky gezek 8:26',
+                                                'Soňky gezek ${prov.lastDrinkDate}',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                   fontFamily:

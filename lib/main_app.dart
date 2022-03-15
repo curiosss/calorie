@@ -1,4 +1,5 @@
 import 'package:calorie_calculator/providers/categorie_prv.dart';
+import 'package:calorie_calculator/providers/history_prv.dart';
 import 'package:calorie_calculator/providers/todaymeals_prv.dart';
 import 'package:calorie_calculator/views/fitness_app/fitness_app_home_screen.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +13,8 @@ class MainApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => CategorieProvider()),
-        ChangeNotifierProvider(
-          create: ((context) => TodayMealsProvider()),
-        )
+        ChangeNotifierProvider(create: ((context) => TodayMealsProvider())),
+        ChangeNotifierProvider(create: ((context) => HistoryProvider())),
       ],
       child: MaterialApp(
         theme: ThemeData(
