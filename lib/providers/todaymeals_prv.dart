@@ -15,7 +15,8 @@ class TodayMealsProvider with ChangeNotifier {
   int totalYaglar = 0, ratioYag = 0;
   int totalUglewodlar = 0, ratioUglewod = 0;
 
-  double water = 0;
+  int water = 0;
+  final int SHOULDDRINK = 3000;
   List<List<Product>> eatings = [[], [], [], []];
   List<double> totalEatingCal = [0, 0, 0, 0];
   List<Product> selectableProducts = [];
@@ -80,13 +81,13 @@ class TodayMealsProvider with ChangeNotifier {
       totalEatingCal[i] = sum;
       eatenCal += sum;
     }
+    print('totalbelok: $totalBelok');
     leftCal = shouldEatCal - eatenCal;
     int ttsum = totalBelok + totalUglewodlar + totalYaglar;
+    if (ttsum == 0) ttsum = 1;
     ratioBelok = (totalBelok / ttsum * 100).toInt();
     ratioYag = (totalYaglar / ttsum * 100).toInt();
     ratioUglewod = (totalUglewodlar / ttsum * 100).toInt();
-
-    print('new : $ratioBelok');
   }
 
   Future<bool> addMealListData(
@@ -103,21 +104,30 @@ class TodayMealsProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> removeMealListData(
-      {@required int mealType, @required int index}) async {
+  Future<bool> removeMealListData({
+    @required int mealType,
+    @required int index,
+  }) async {
     try {
       eatings[mealType].removeAt(index);
       updateMealsInDb();
       notifyListeners();
       print('encoded json: ${json.encode(eatings)}');
+      return true;
     } catch (e) {
       print(e);
       return false;
     }
   }
 
-  updateMealsInDb() {
-    calculateTotalCalories();
+  changeWater({int val = 0}) {
+    water += val;
+    notifyListeners();
+    updateMealsInDb(shuldCalculate: false);
+  }
+
+  updateMealsInDb({bool shuldCalculate = true}) {
+    if (shuldCalculate) calculateTotalCalories();
     menusModel.water = water;
     menusModel.meals = json.encode(eatings);
     DB.instance.updateTodayMenu(menusModel);

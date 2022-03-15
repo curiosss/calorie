@@ -2,7 +2,7 @@ class MenusModel {
   int id;
   String date;
   String meals;
-  double water;
+  int water;
 
   MenusModel({
     this.id,
