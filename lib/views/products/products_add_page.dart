@@ -60,7 +60,7 @@ class _ProductsAddPageState extends State<ProductsAddPage> {
 
   void pickImage({bool isGallery = false}) async {
     try {
-      final imageT = await imagePicker.pickImage(
+      final imageT = await imagePicker.getImage(
           source: isGallery ? ImageSource.gallery : ImageSource.camera);
       if (imageT == null) return;
       print(imageT.path);
@@ -69,8 +69,7 @@ class _ProductsAddPageState extends State<ProductsAddPage> {
       });
       imgExtension = imageT.path.split(".").last;
       isImageSelected = true;
-      print(imageT.path); 
-      
+      print(imageT.path);
     } catch (e) {
       print(e);
     }

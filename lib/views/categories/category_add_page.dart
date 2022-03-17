@@ -48,7 +48,7 @@ class _CategoryAddPageState extends State<CategoryAddPage> {
 
   void pickImage({bool isGallery = false}) async {
     try {
-      final imageT = await imagePicker.pickImage(
+      final imageT = await imagePicker.getImage(
           source: isGallery ? ImageSource.gallery : ImageSource.camera);
       if (imageT == null) return;
       print(imageT.path);
