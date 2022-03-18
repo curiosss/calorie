@@ -99,7 +99,7 @@ class _ProductPageState extends State<ProductPage> {
                                     Provider.of<CategorieProvider>(context,
                                             listen: false)
                                         .deleteProduct(
-                                            id: services.products[index].id);
+                                            product: services.products[index]);
                                     Navigator.of(context).pop();
                                   }
                                 });

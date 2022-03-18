@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:calorie_calculator/helpers/db_helper.dart';
 import 'package:calorie_calculator/helpers/shared_preferences_helper.dart';
 import 'package:calorie_calculator/models/calorie_model.dart';
@@ -58,11 +60,12 @@ class CategorieProvider with ChangeNotifier {
     return result;
   }
 
-  Future<bool> deleteCategory({@required int catId}) async {
-    bool res = await DB.instance.deleteCategory(catId: catId);
+  Future<bool> deleteCategory({@required Category category}) async {
+    bool res = await DB.instance.deleteCategory(catId: category.id);
 
     if (res) {
-      categories.removeWhere((element) => element.id == catId);
+      await File(category.image).delete();
+      categories.removeWhere((element) => element.id == category.id);
       notifyListeners();
     }
     return res;
@@ -96,11 +99,12 @@ class CategorieProvider with ChangeNotifier {
     return res;
   }
 
-  Future<bool> deleteProduct({@required int id}) async {
-    print('delete product id: $id');
-    bool res = await DB.instance.deleteProduct(productId: id);
+  Future<bool> deleteProduct({@required Product product}) async {
+    print('delete product id: ${product.id}');
+    bool res = await DB.instance.deleteProduct(productId: product.id);
     if (res) {
-      products.removeWhere((element) => element.id == id);
+      await File(product.image).delete();
+      products.removeWhere((element) => element.id == product.id);
       notifyListeners();
     }
     return res;

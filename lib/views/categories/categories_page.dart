@@ -164,8 +164,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
                                                     context,
                                                     listen: false)
                                                 .deleteCategory(
-                                                    catId: catProv
-                                                        .categories[index].id);
+                                                    category: catProv
+                                                        .categories[index]);
                                             Navigator.of(context).pop();
                                           }
                                         });
